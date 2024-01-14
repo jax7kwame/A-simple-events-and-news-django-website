@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Home | Events{% endblock title %}
+{% block content %}
+
+    <!-- Events Section -->
+    <section id="events" class="mt-5">
+      
+      <div class="container my-4">
+        <div>
+          <h2>Events</h2>
+        </div>
+        <!-- Event Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-2">
+          {% for event in events %}
+            {% if forloop.counter <= 4 %}
+              <div class="col">
+                <a href="{% url 'event_detail' event.slug %}" style="text-decoration: none; color: black;">
+                  <div class="card border-black">
+                    {% if event.event_photo.url %}
+                    <img src="{{ event.event_photo.url }}" class="card-img-top" alt="...">
+                    {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title">{{ event.event_title }}</h5>
+                      <p class="card-text">{{ event.hosting_church_or_group }}</p>
+                      <p class="card-text"><small class="text-body-secondary">Date: {{ event.event_date }} - {{ event.event_time }}</small></p>
+                      {% if event.on_site %}
+                        <p>Onsite</p>
+                      {% else %}
+                        <a href="{{ event.virtual_link }}" class="btn btn-sm btn-primary mt-3">Virtual</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="mt-5">
+      <div class="container my-4">
+        <div class="my-4">
+          <h2>News</h2>
+        </div>
+        <!-- News Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-2">
+          {% for news in news %}
+          {% if forloop.counter <= 4 %}
+          <div class="col">
+            <a href="{% url 'news_post' news.slug %}" style="text-decoration: none;">
+              <div class="card border-primary-subtle">
+                <img src="{{ news.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ news.title }}</h5>
+                  <p class="card-text">{{ news.intro|truncatewords:13 }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <p class="card-text"><small class="text-muted">{{ news.created_at|timesince }} ago</small></p>
+                  </div>               
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    
+{% endblock %}

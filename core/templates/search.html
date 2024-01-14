@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+
+</section>
+    <!-- search results -->
+    <section id="search-results">
+      
+      <div class="container my-4">
+        <div>
+          <h2>Search results</h2>
+          <h3>Query: {{ query }}</h3>
+        </div>
+        <!-- Event Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-2">
+          {% for event in events %}
+          <div class="col">
+            <a href="{% url 'event_detail' event.slug %}" style="text-decoration: none; color: black;">
+              <div class="card border-black">
+                {% if event.event_photo.url %}
+                <img src="{{ event.event_photo.url }}" class="card-img-top" alt="...">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ event.event_title }}</h5>
+                  <p class="card-text">{{ event.hosting_church_or_group }}</p>
+                  <p class="card-text"><small class="text-body-secondary">Date: {{ event.event_date }} - {{ event.event_time }}</small></p>
+                  {% if event.on_site %}
+                    <p>Onsite</p>
+                  {% else %}
+                    <a href="{{ event.virtual_link }}" class="btn btn-sm btn-primary mt-3">Virtual</a>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          </div>
+          {% empty %}
+          <div>
+            <p>No results.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </section>
+    
+{% endblock %}

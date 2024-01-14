@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ news_post.title }}{% endblock title %}{{ news_post.title }}
+
+{% block content %}
+  <div style="height: 50px;"></div>
+  <div class="container">
+    <!-- News Post -->
+    <section id="news-post">
+      <h3>{{ news_post.title }}</h3>
+      <img src="{{ news_post.image.url }}" alt="" class="img-fluid mt-4" style="max-height: 540px;">
+      <p class="mt-4">{{ news_post.author }}</p>
+      <p><small>{{ news_post.created_at }}</small></p>
+      <p class="fw-bolder">{{ news_post.intro }}</p>
+      <p>{{ news_post.body }}</p>
+    </section>
+    <!-- Comments-->
+    <!--
+    <section id="comment">
+      <div class="container">
+        <hr>
+        <h3>Comments</h3>
+        {% for comment in news_post.comments.all %}
+            <div>
+                <p>{{ comment.name }}<br>{{ comment.body }} -- {{ comment.created_at }}.
+            </div>
+        {% endfor %}
+        <form method='POST'>
+            {% csrf_token %}
+            {{ news_comment_form.as_p }}
+            <div>
+                <button class="btn btn-secondary">comment</button>
+            </div>
+        </form>
+        
+      </div>
+    </section>
+    -->
+  </div>
+{% endblock content %}
+

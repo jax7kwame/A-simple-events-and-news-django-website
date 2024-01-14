@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Events{% endblock title %}
+{% block content %}
+
+    <!-- Events Section -->
+    <section id="events" class="mt-5">
+      
+      <div class="container my-4">
+        <div>
+          <h2>Events</h2>
+        </div>
+        <!-- Event Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-2">
+          {% for event in event_page_obj %}
+          <div class="col">
+            <a href="{% url 'event_detail' event.slug %}" style="text-decoration: none; color: black;">
+              <div class="card border-black">
+                {% if event.event_photo.url %}
+                <img src="{{ event.event_photo.url }}" class="card-img-top" alt="...">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ event.event_title }}</h5>
+                  <p class="card-text">{{ event.hosting_church_or_group }}</p>
+                  <p class="card-text"><small class="text-body-secondary">Date: {{ event.event_date }} - {{ event.event_time }}</small></p>
+                  {% if event.on_site %}
+                    <p>Onsite</p>
+                  {% else %}
+                    <a href="{{ event.virtual_link }}" class="btn btn-sm btn-primary mt-3">Virtual</a>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-3 text-center">
+          <span>
+              {% if event_page_obj.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ event_page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span>
+                  Page {{ event_page_obj.number }} of {{ event_page_obj.paginator.num_pages }}.
+              </span>
+
+              {% if event_page_obj.has_next %}
+                  <a href="?page={{ event_page_obj.next_page_number }}">next</a>
+                  <a href="?page={{ event_page_obj.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
+      </div>
+
+    </section>
+    
+{% endblock %}
